@@ -1,0 +1,374 @@
+package com.fresco.cucumber;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
+import java.util.*;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.interactions.*;
+
+public class LoginStepDefinition {
+  /*Write your code here
+    You can directly use hooks.driver to perform driver operations
+    ignore errors regarding hooks.driver*/
+
+@Given("^I am on the login page$")
+public void iAmOnLoginPage(){
+hooks.driver.get("https://serverh2mo4kf5-ws-dev-server-8000.us-dc-5.projects.hackerrank.net/login.html");
+String ActualTitle = hooks.driver.getTitle();
+String ExpectedTitle = "Login";
+ExpectedTitle.equalsIgnoreCase(ActualTitle);
+System.out.println("User is on Login Page :"+ActualTitle);
+}
+@When("^I check page title$")
+public void verifyLoginPageTitle(){
+
+String ActualTitle = hooks.driver.getTitle();
+String ExpectedTitle = "Login";
+ExpectedTitle.equalsIgnoreCase(ActualTitle);
+System.out.println("User is on Login Page");
+
+//String ActualTitle1 = hooks.driver.findElement(By.xpath("//*[@id='mainCnt']/div/div/h1")).getText();
+String ExpectedTitle1 = "Hotel Booking Application ";
+//ExpectedTitle1.equalsIgnoreCase(ActualTitle1);
+System.out.println("User is on Hotel Login Page");
+}
+@When("^I enter username only$")
+public void enterUsername(){
+hooks.driver.findElement(By.xpath("//input[@name='userName']")).sendKeys("admin");
+System.out.println("User name entered ");
+}
+@When("^I click on Login button1$")
+public void clickLoginButton1(){
+hooks.driver.findElement(By.xpath("//input[@value = 'Login']")).click();
+System.out.println("Clicked on Login Button1 ");
+}
+@When("^I check for error message$")
+public void errorMessageUsername(){
+String ActualTitle = hooks.driver.findElement(By.xpath("//div[@id='pwdErrMsg']")).getText();
+String ExpectedTitle = " * Please enter password. ";
+ExpectedTitle.equalsIgnoreCase(ActualTitle);
+System.out.println("Error Message for Username : "+ ActualTitle);
+}
+@When("^I enter wrong password$")
+public void enterWrongPassword(){
+hooks.driver.findElement(By.xpath("//input[@name='userName']")).sendKeys("T");
+System.out.println("Wrong Password entered ");
+}
+@When("^I click on Login button2$")
+public void clickLoginButton2(){
+hooks.driver.findElement(By.xpath("//input[@value = 'Login']")).click();
+System.out.println("Clicked on Login Button2 ");
+}
+@When("^I check for alert$")
+public void errorMessagePassword(){
+String errorMessage_Password = hooks.driver.switchTo().alert().getText();
+
+hooks.driver.switchTo().alert().accept();
+System.out.println("Error Message for Password : "+errorMessage_Password);
+}
+@When("^I enter correct details$")
+public void enterCorrectDetails(){
+hooks.driver.findElement(By.xpath("//input[@name='userName']")).clear();
+hooks.driver.findElement(By.xpath("//[@input[@name='userPwd']")).clear();
+hooks.driver.findElement(By.xpath("//input[@name='userName']")).sendKeys("admin");
+hooks.driver.findElement(By.xpath("//[@input[@name='userPwd']")).sendKeys("admin");
+System.out.println("Enter Correct Username and Password");
+}
+@When("^I click on Login Button3$")
+public void clickLoginButton3(){
+hooks.driver.findElement(By.xpath("//input[@value = 'Login']")).click();
+System.out.println("Clicked on Login Button3");
+}
+@Then("^I expect to go to next page$")
+public void nextPageLogin(){
+String ActualTitle = hooks.driver.getTitle();
+String ExpectedTitle = "Hotel Booking";
+ExpectedTitle.equalsIgnoreCase(ActualTitle);
+System.out.println("Next Page of Login : "+hooks.driver.getTitle());
+}
+
+}
+
+
+
+
+
+
+
+package com.fresco.cucumber;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.interactions.*;
+import org.openqa.selenium.support.ui.Select;
+
+public class BookingDefinition{
+  /*Write your code here
+    You can directly use hooks.driver to perform driver operations
+    ignore errors regarding hooks.driver*/
+
+    @Given("^I am on the booking page$")
+public void onBookingPage(){
+hooks.driver.get("https://server8b6h91xg-ws-dev-server-8000.in-dc-1.projects.hackerrank.net/hotelbooking.html");
+System.out.println("User is on Booking Page : "+hooks.driver.getTitle());
+}
+
+@When("^I check the page title$")
+public void titleBookingPage(){
+String ActualTitle = hooks.driver.getTitle();
+String ExpectedTitle = " Hotel Booking";
+ExpectedTitle.equalsIgnoreCase(ActualTitle);
+System.out.println("Booking Page Title is: "+hooks.driver.getTitle());
+}
+
+@When("^I click confirm booking button$")
+public void clickConfirmBookingButton1(){
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked - 1");
+}
+
+@When("^I check for alert for first name$")
+public void alertMessageFirstName(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for firstname :"+ExpectedTitle);
+}
+
+@When("^I enter first name and click confirm booking$")
+public void enterFirstName(){
+hooks.driver.findElement(By.id("txtFirstName")).sendKeys("FirstName");
+System.out.println("FirstName entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check for alert for last name$")
+public void alertMessageLastName(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for LastName :"+ExpectedTitle);
+}  
+ 
+@When("^I enter last name and click confirm booking$")
+public void enterLastName(){
+hooks.driver.findElement(By.id("txtLastName")).sendKeys("LastName");
+System.out.println("LastName entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check for alert for email$")
+public void alertMessageEmail(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for Email : "+ExpectedTitle);
+}  
+ 
+@When("^I enter email and click confirm booking$")
+public void enterEmail(){
+hooks.driver.findElement(By.id("txtEmail")).sendKeys("firstname@tcs.com");
+System.out.println("Email entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check for alert for mobile number$")
+public void alertMessageMobileNumber(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for Mobile Number : "+ExpectedTitle);
+}
+
+@When("^I enter invalid mobile no and click confirm booking$")
+public void enterInvalidMobileNumber(){
+hooks.driver.findElement(By.id("txtPhone")).sendKeys("123");
+System.out.println("Invalid Mobile Number entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check for alert for contact no$")
+public void alertInvalidMobileNumber(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for Invalid Mobile Number : "+ExpectedTitle);
+}
+
+@When("^I enter contact no and click confirm booking$")
+public void enterMobileNumber(){
+hooks.driver.findElement(By.id("txtPhone")).sendKeys("9970709079");
+System.out.println("Mobile Number entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check alert for city$")
+public void alertMessageCity(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for City : "+ExpectedTitle);
+}
+
+@When("^I select city and click confirm booking$")
+public void enterCity(){
+Select cities = new Select(hooks.driver.findElement(By.name("city")));
+cities.selectByVisibleText("Pune");
+System.out.println("City selected");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check alert for state$")
+public void alertMessageState(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for State : "+ExpectedTitle);
+}
+
+@When("^I select state and click confirm booking$")
+public void enterState(){
+Select states = new Select(hooks.driver.findElement(By.name("state")));
+states.selectByVisibleText("Maharashtra");
+System.out.println("State selected");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check alert for cardholder name$")
+public void alertMessageCardHolderName(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for Card Holder Name : "+ExpectedTitle);
+}
+
+@When("^I enter cardholder name and click confirm booking$")
+public void enterCardHolderName(){
+hooks.driver.findElement(By.name("txtFN")).sendKeys("FirstName LastName");
+System.out.println("Card Holder Name is entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check for alert for debit card number$")
+public void alertMessageDebitCardNumber(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for Debit Card Number : "+ExpectedTitle);
+}
+
+@When("^I enter card details and click confirm booking$")
+public void enterDebitCardNumber(){
+hooks.driver.findElement(By.name("debit")).sendKeys("123456789");
+System.out.println("Debit Card Number is entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check alert for cvv$")
+public void alertMessageCVV(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for CVV : "+ExpectedTitle);
+}
+
+@When("^I enter cvv and click confirm booking$")
+public void enterCVV(){
+hooks.driver.findElement(By.name("cvv")).sendKeys("123");
+System.out.println("CVV is entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@When("^I check alert for exp month$")
+public void alertMessageExpMonth(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for Expiry Month : "+ExpectedTitle);
+}
+@When("^I enter exp month and click confirm booking$")
+public void enterExpMonth(){
+hooks.driver.findElement(By.name("month")).sendKeys("10");
+System.out.println("Exp Month is entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+} 
+
+@When("^I check alert for exp year$")
+public void alertMessageExpYear(){
+String ExpectedTitle = hooks.driver.switchTo().alert().getText();
+hooks.driver.switchTo().alert().accept();
+System.out.println("Alert Massage is display for Expiry Year : "+ExpectedTitle);
+}
+
+@When("^I enter exp year and click confirm booking$")
+public void enterExpYear(){
+hooks.driver.findElement(By.name("year")).sendKeys("2030");
+System.out.println("Exp Year is entered");
+hooks.driver.findElement(By.id("btnPayment")).click();
+System.out.println("Confirmation Booking Button is Clicked");
+}
+
+@Then("^I should go to success page$")
+public void userOnSuccessPage(){
+String ActualTitle = hooks.driver.getTitle();
+String ExpectedTitle = "Booking Completed!";
+ExpectedTitle.equalsIgnoreCase(ActualTitle);
+System.out.println("User is on Success Page : "+ActualTitle);
+}
+
+}
+
+
+
+
+
+
+package com.fresco.cucumber;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.interactions.*;
+import java.util.*;
+
+public class BookingSuccessDefinition{
+
+  /*Write your code here
+    You can directly use hooks.driver to perform driver operations
+    ignore errors regarding hooks.driver*/
+
+ @Given("^I am on Success page$")
+public void onSuccessPage(){
+hooks.driver.get("https://server8b6h91xg-ws-dev-server-8000.in-dc-1.projects.hackerrank.net/success.html");
+System.out.println("User is on Success Page");
+
+}
+@When("^i check page title$")
+public void titleSuccessPage(){
+String ActualTitle = hooks.driver.getTitle();
+String ExpectedTitle = "Payment Details";
+ExpectedTitle.equalsIgnoreCase(ActualTitle);
+System.out.println("Success Page Title : "+ActualTitle);
+
+}
+@Then("^close the browser$")
+public void closeBrowser(){
+hooks.driver.close();
+System.out.println("Driver is closed");
+}
+
+
+}
+
